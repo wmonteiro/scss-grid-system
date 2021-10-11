@@ -1,12 +1,9 @@
 {
-  "name": "scss-grid-generator",
+  "name": "scss-grid-system",
   "description": "Responsive grid system Sass based similar to the bootstrap grid system.",
   "version": "1.0.0",
   "main": "main.scss",
   "files": ["main.scss", "_var.scss", "_helper.scss"],
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/wmonteiro/scss-grid-system.git"
