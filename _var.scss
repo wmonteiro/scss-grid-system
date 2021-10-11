@@ -1,0 +1,28 @@
+/*
+    Columns options
+**/
+$columns: 12;
+$gutter: 1.6%;
+
+
+/*
+    Selectors name. eg.: You can rename the .container to .section and work with class="section" instead of class="container"
+**/
+$selectors: (
+    container: '.container',
+    row: '.row',
+    column: '.col'
+);
+
+
+/*
+    These are customizable breakpoints you can add or remove as you want.
+    The first element is the prefix and the value is the breakpoint's width. eg.: you can change the sm prefix to small and work with class="col col-small-{number}"
+    [prefix]: [value]
+**/
+$breakpoints: (
+    sm: 576px,
+    md: 768px,
+    lg: 992px,
+    xl: 1200px
+);

@@ -1,0 +1,141 @@
+@use 'sass:map';
+
+@use '_var';
+@use '_helper';
+
+
+
+/*
+    Selectors name from _var.scss
+**/
+
+$container_selector: map.get(var.$selectors, 'container');
+$row_selector: map.get(var.$selectors, 'row');
+$column_selector: map.get(var.$selectors, 'column');
+
+ 
+
+/*
+    Containers
+**/
+
+#{$container_selector} {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0 15px;
+    margin: 0 auto;
+    clear: both;
+
+    &-fluid { // Fluid container
+        width: 100%;
+        margin: 0 auto;
+        padding: 0 15px;
+    }
+}
+  
+@each $prefix, $breakpoint in var.$breakpoints {
+    @media (min-width: $breakpoint) {
+        #{$container_selector} {
+            max-width: $breakpoint - 36;
+        }
+    }
+}
+
+/*
+    End containers
+**/
+
+
+
+/*
+    Rows
+**/
+
+#{$row_selector} {
+    margin: 0 -15px 0 -15px;
+} 
+
+#{$row_selector}:before,
+#{$row_selector}:after {
+    content:"";
+    display:table;
+}
+
+#{$row_selector}:after {
+    clear:both;
+}
+ 
+#{$row_selector} {
+    zoom:1; /*! For IE 6/7 */
+} 
+
+/*
+    End rows
+**/
+
+
+
+/*
+    Columns
+    ----------------------------------------------------------------------------------------
+    |      |      |      |      |      |      |      |      |      |       |       |       |
+    | 1/12 | 2/12 | 3/12 | 4/12 | 5/12 | 6/12 | 7/12 | 8/12 | 9/12 | 10/12 | 11/12 | 12/12 |
+    |      |      |      |      |      |      |      |      |      |       |       |       |
+    ----------------------------------------------------------------------------------------
+
+**/
+
+// Store column selector without dot
+
+$_selector: helper.str-replace(#{$column_selector}, '.', null);
+
+[class*=#{$_selector}] {
+    display: block;
+    float: left;
+    margin: 1% 0 1% var.$gutter;
+    padding: 15px;
+    box-sizing: border-box;
+
+    &:first-child {
+        margin-left: 0 !important;
+    }
+}
+
+// col-1, col-2, col-3..
+
+$x: 12;
+
+@for $i from 1 through var.$columns {
+    #{$column_selector}-#{$i} {
+        $x: $x - $i;
+        width: if($i == 12, 100%, (100% / var.$columns * $i) - (var.$gutter * $x / 12));
+    }
+}
+
+
+// col-{prefix}-1, col-{prefix}-2, col-{prefix}-3...
+
+$x: 12;
+
+@each $prefix, $breakpoint in var.$breakpoints {
+    @media only screen and (max-width: $breakpoint) {
+        @for $i from 1 through var.$columns {
+            #{$column_selector}-#{$prefix}-#{$i} {
+                $x: $x - $i;
+                width: if($i == 12, 100%, (100% / var.$columns * $i) - (var.$gutter * $x / 12));
+            }
+        }
+    }
+}
+
+@media only screen and (max-width: 576px) {
+    [class*=#{$_selector}] {
+        margin-left: 0 !important;
+        width: 100% !important;
+    }
+}
+
+
+/*
+    End columns
+**/
